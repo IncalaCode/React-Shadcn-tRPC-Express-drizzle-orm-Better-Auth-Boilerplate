@@ -1,0 +1,351 @@
+# =============================================================================
+# GITIGNORE FOR REACT + TRPC + EXPRESS + TYPEORM + BETTER AUTH BOILERPLATE
+# =============================================================================
+
+# =============================================================================
+# DEPENDENCIES
+# =============================================================================
+
+# Node modules
+node_modules/
+*/node_modules/
+**/node_modules/
+
+# Package lock files (optional - uncomment if you want to ignore them)
+# package-lock.json
+# */package-lock.json
+
+# Yarn lock files
+yarn.lock
+*/yarn.lock
+**/yarn.lock
+
+# Pnpm lock files
+pnpm-lock.yaml
+*/pnpm-lock.yaml
+**/pnpm-lock.yaml
+
+# =============================================================================
+# BUILD OUTPUTS
+# =============================================================================
+
+# TypeScript compiled output
+dist/
+*/dist/
+**/dist/
+build/
+*/build/
+**/build/
+
+# Frontend build
+frontend/dist/
+frontend/build/
+
+# Backend build
+backend/dist/
+backend/build/
+
+# =============================================================================
+# ENVIRONMENT & CONFIGURATION
+# =============================================================================
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+.env.staging
+*/env
+*/env.*
+**/env
+**/env.*
+
+# Configuration files with secrets
+config/.env
+config/.env.*
+config/env
+config/env.*
+
+# Local configuration overrides
+*.local
+*.local.*
+
+# =============================================================================
+# DATABASE
+# =============================================================================
+
+# SQLite databases
+*.sqlite
+*.sqlite3
+*.db
+database.sqlite
+database.sqlite3
+
+# Database dumps
+*.sql
+*.dump
+*.backup
+
+# Database logs
+*.log
+
+# =============================================================================
+# LOGS
+# =============================================================================
+
+# Application logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Runtime logs
+*.pid
+*.seed
+*.pid.lock
+
+# =============================================================================
+# COVERAGE & TESTING
+# =============================================================================
+
+# Test coverage
+coverage/
+*/coverage/
+**/coverage/
+.nyc_output
+*.lcov
+
+# Test results
+test-results/
+test-results.xml
+junit.xml
+
+# =============================================================================
+# IDE & EDITOR
+# =============================================================================
+
+# VS Code
+.vscode/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# WebStorm / IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# =============================================================================
+# OPERATING SYSTEM
+# =============================================================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.tmp
+*.temp
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# =============================================================================
+# DEPLOYMENT & PRODUCTION
+# =============================================================================
+
+# Deployment packages
+deployment-*.tar.gz
+deployment-*.zip
+*.tar.gz
+*.zip
+
+# Production builds
+production/
+staging/
+
+# PM2
+.pm2/
+
+# =============================================================================
+# TEMPORARY FILES
+# =============================================================================
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Cache directories
+.cache/
+.parcel-cache/
+.eslintcache
+.stylelintcache
+
+# =============================================================================
+# TYPEORM & DATABASE
+# =============================================================================
+
+# TypeORM generated files
+ormconfig.json
+ormconfig.js
+ormconfig.ts
+data-source.ts
+data-source.js
+
+# Migration files (uncomment if you want to ignore them)
+# migrations/
+# */migrations/
+# **/migrations/
+
+# Seed files (uncomment if you want to ignore them)
+# seeds/
+# */seeds/
+# **/seeds/
+
+# =============================================================================
+# FRONTEND SPECIFIC
+# =============================================================================
+
+# Vite
+.vite/
+frontend/.vite/
+
+# React
+frontend/.cache/
+frontend/.parcel-cache/
+
+# Storybook
+storybook-static/
+frontend/storybook-static/
+
+# =============================================================================
+# BACKEND SPECIFIC
+# =============================================================================
+
+# Uploads
+uploads/
+backend/uploads/
+*/uploads/
+**/uploads/
+
+# Session storage
+sessions/
+backend/sessions/
+*/sessions/
+**/sessions/
+
+# =============================================================================
+# SECURITY
+# =============================================================================
+
+# Private keys
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Certificates
+*.crt
+*.cer
+*.der
+
+# SSH keys
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+
+# =============================================================================
+# MONOREPO SPECIFIC
+# =============================================================================
+
+# Workspace files
+.pnpm-workspace.yaml
+lerna.json
+
+# =============================================================================
+# CUSTOM IGNORES
+# =============================================================================
+
+# Add your custom ignores here
+# custom-ignore-pattern
+
+# =============================================================================
+# KEEP THESE FILES
+# =============================================================================
+
+# Keep example environment files
+!config/.env.example
+!frontend/.env.example
+
+# Keep documentation
+!docs/
+!README.md
+!*.md
+
+# Keep configuration templates
+!*.config.js
+!*.config.ts
+!*.config.json
+!tsconfig.json
+!tsconfig.*.json

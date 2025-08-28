@@ -1,0 +1,120 @@
+<!-- SUBJECT: Great news! Your account has been restored -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Restored</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #4f46e5;
+            margin-bottom: 10px;
+        }
+        .title {
+            font-size: 24px;
+            color: #059669;
+            margin-bottom: 20px;
+        }
+        .content {
+            margin-bottom: 30px;
+        }
+        .success {
+            background-color: #f0fdf4;
+            border: 1px solid #10b981;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 20px 0;
+            color: #065f46;
+        }
+        .guidelines {
+            background-color: #eff6ff;
+            border: 1px solid #3b82f6;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+        .button {
+            display: inline-block;
+            background-color: #10b981;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            margin: 20px 0;
+        }
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+            color: #6b7280;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">{{appName}}</div>
+            <h1 class="title">Welcome Back! 🎉</h1>
+        </div>
+        
+        <div class="content">
+            <p>Hi {{name}},</p>
+            
+            <div class="success">
+                <strong>✅ Great News!</strong> Your {{appName}} account has been restored and you can now access all features again.
+            </div>
+            
+            <p>We're happy to inform you that after reviewing your case, we have lifted the suspension on your account. You now have full access to your {{appName}} account and all its features.</p>
+            
+            <p><strong>What's restored:</strong></p>
+            <ul>
+                <li>Full access to your account and profile</li>
+                <li>Ability to interact with other users</li>
+                <li>Access to all platform features</li>
+                <li>Email notifications and updates</li>
+            </ul>
+            
+            <div class="guidelines">
+                <strong>📋 Friendly Reminder:</strong> To ensure a positive experience for everyone, please continue to follow our Community Guidelines and Terms of Service. This helps us maintain a safe and welcoming environment for all users.
+            </div>
+            
+            <p>We appreciate your patience during this process and look forward to seeing you back on the platform!</p>
+            
+            <div style="text-align: center;">
+                <a href="{{appUrl}}" class="button">Access Your Account</a>
+            </div>
+            
+            <p>If you have any questions or need assistance getting back into your account, our support team is here to help.</p>
+        </div>
+        
+        <div class="footer">
+            <p>Welcome back!<br>The {{appName}} Team</p>
+            <p>Need help? Contact us at: <a href="mailto:support@{{appName}}.com">support@{{appName}}.com</a></p>
+        </div>
+    </div>
+</body>
+</html>
