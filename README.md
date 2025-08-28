@@ -1,4 +1,4 @@
-# React + tRPC + Express + TypeORM + Better Auth Boilerplate
+# React (Shadcn) + tRPC + Express + TypeORM + Better Auth Boilerplate
 
 A modern, full-stack TypeScript boilerplate with end-to-end type safety, Better Auth authentication, and clean architecture.
 
@@ -193,3 +193,4 @@ If you're using AI to help with development, start with the [AI Coding Guide](./
 ## 📄 License
 
 MIT License - see LICENSE file for details
+# React-Shadcn-tRPC-Express-TypeORM-Better-Auth-Boilerplate
