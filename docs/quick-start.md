@@ -145,13 +145,16 @@ npm run dev:backend   # Backend on http://localhost:3001
 ### **Generate Migrations**
 ```bash
 # When you make changes to schema, generate a migration
-npm run db:generate
+npm run drizzle:generate
 
 # Run migrations
-npm run db:migrate
+npm run drizzle:migrate
 
 # Push schema changes directly (development)
-npm run db:push
+npm run drizzle:push
+
+# Open Drizzle Studio for database management
+npm run drizzle:studio
 ```
 
 ### **Database Synchronization**
@@ -238,7 +241,7 @@ npm run dev
 # 2. Add tRPC procedures in backend/src/trpc/routers/
 # 3. Build React components in frontend/src/components/
 # 4. Test functionality
-# 5. Generate migration if needed: npm run db:generate
+# 5. Generate migration if needed: npm run drizzle:generate
 # 6. Commit your changes
 ```
 

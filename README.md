@@ -115,9 +115,29 @@ Configure email for verification and notifications:
 - `npm run clean` - Clean all build artifacts and node_modules
 
 ### Database Scripts
-- `npm run db:generate` - Generate new migration file
-- `npm run db:migrate` - Run pending migrations
-- `npm run db:push` - Push schema changes to database
+- `npm run drizzle:generate` - Generate new migration file
+- `npm run drizzle:migrate` - Run pending migrations
+- `npm run drizzle:push` - Push schema changes to database
+- `npm run drizzle:studio` - Open Drizzle Studio for database management
+- `npm run migration:generate` - Alias for drizzle:generate
+- `npm run migration:run` - Alias for drizzle:migrate
+- `npm run migration:push` - Alias for drizzle:push
+
+### Database Workflow
+```bash
+# 1. Make changes to your schema files in backend/src/database/entities/
+# 2. Generate migration file
+npm run drizzle:generate
+
+# 3. Apply migrations to database
+npm run drizzle:migrate
+
+# OR for development (direct schema push without migration files)
+npm run drizzle:push
+
+# 4. Open Drizzle Studio to view/manage your database
+npm run drizzle:studio
+```
 
 ## 🔐 Better Auth Features
 
