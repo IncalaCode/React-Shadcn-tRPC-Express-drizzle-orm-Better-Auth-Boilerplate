@@ -213,4 +213,4 @@ If you're using AI to help with development, start with the [AI Coding Guide](./
 ## 📄 License
 
 MIT License - see LICENSE file for details
-# React-Shadcn-tRPC-Express-TypeORM-Better-Auth-Boilerplate
+
