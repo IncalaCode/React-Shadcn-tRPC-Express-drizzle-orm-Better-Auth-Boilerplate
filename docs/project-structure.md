@@ -1,11 +1,11 @@
 # 🏗️ Project Structure & Organization
 
-This document explains the complete structure of the React + tRPC + Express + TypeORM + Better Auth boilerplate.
+This document explains the complete structure of the React + tRPC + Express + Drizzle ORM + Better Auth boilerplate.
 
 ## 📁 **Root Directory Structure**
 
 ```
-react-trpc-express-typeorm-better-auth/
+react-trpc-express-drizzle-better-auth/
 ├── 📁 backend/                # Express.js backend application
 ├── 📁 frontend/               # React frontend application
 ├── 📁 docs/                   # Documentation and guides
@@ -17,7 +17,7 @@ react-trpc-express-typeorm-better-auth/
 ## 🖥️ **Backend Layer (`backend/`)**
 
 ### **Purpose**
-Express.js server with tRPC, TypeORM, and Better Auth authentication.
+Express.js server with tRPC, Drizzle ORM, and Better Auth authentication.
 
 ### **Structure**
 ```
@@ -28,7 +28,7 @@ backend/
 ├── 📄 src/
 │   ├── 📄 index.ts            # Main server entry point
 │   ├── 📁 trpc/               # tRPC setup and routers
-│   ├── 📁 database/           # TypeORM setup and entities
+│   ├── 📁 database/           # Drizzle ORM setup and schema
 │   ├── 📁 auth/               # Better Auth configuration
 │   ├── 📁 middleware/         # Express middleware
 │   ├── 📁 services/           # Business logic layer
@@ -54,22 +54,36 @@ backend/
 #### **`src/trpc/` - tRPC Setup**
 ```typescript
 trpc/
-├── 📄 index.ts                # Main tRPC app router
+├── 📄 trpc.ts                 # tRPC configuration and setup
 ├── 📄 context.ts              # tRPC context with auth
 ├── 📁 routers/                # tRPC procedure routers
-│   └── 📄 _app.ts             # Main router combining all routers
-└── 📁 procedures/              # tRPC procedure definitions
+│   ├── 📄 _app.ts             # Main router combining all routers
+│   ├── 📄 auth.ts             # Auth router
+│   └── 📄 user.ts             # User router
+├── 📁 middleware/             # tRPC middleware
+│   └── 📄 auth.ts             # Authentication middleware
+└── 📁 controllers/            # Controller layer (organized procedures)
+    ├── 📄 index.ts            # Controller exports
+    ├── 📁 auth/               # Auth controllers
+    │   ├── 📄 auth.controller.ts
+    │   ├── 📁 signUp/
+    │   ├── 📁 signIn/
+    │   ├── 📁 signOut/
+    │   └── 📁 [other auth functions]/
+    └── 📁 user/               # User controllers
+        ├── 📄 user.controller.ts
+        ├── 📁 getProfile/
+        ├── 📁 updateProfile/
+        └── 📁 [other user functions]/
 ```
 
 #### **`src/database/` - Data Layer**
 ```typescript
 database/
-├── 📄 connection.ts            # TypeORM DataSource setup
-├── 📁 entities/                # Database models
-│   ├── 📄 User.ts             # User entity for Better Auth
-│   ├── 📄 Session.ts          # Session entity for Better Auth
-│   ├── 📄 Account.ts          # Account entity for Better Auth
-│   └── 📄 Verification.ts     # Verification entity for Better Auth
+├── 📄 connection.ts            # Drizzle database connection
+├── 📁 entities/                # Database schema
+│   ├── 📄 auth-schema.ts      # Auth entities for Better Auth
+│   └── 📄 [other-schemas].ts  # Additional database schemas
 ├── 📁 migrations/              # Database schema changes
 └── 📁 seeds/                   # Database seeding scripts
 ```
@@ -88,23 +102,39 @@ services/
 └── 📄 email.service.ts        # Email service for notifications
 ```
 
+#### **`src/utils/` - Backend Utilities**
+```typescript
+utils/
+├── 📄 logger.ts               # Logging utility
+├── 📄 security.ts             # Security utilities (rate limiting)
+└── 📄 cors.ts                 # CORS configuration utility
+```
+
 ### **Backend Architecture Patterns**
 
 #### **1. Layered Architecture**
 ```
-tRPC Procedures → Services → Database (TypeORM)
-     ↑              ↑           ↑
-  Input Validation  Business Logic  Data Access
+tRPC Routers → Controllers → Services → Database (Drizzle ORM)
+     ↑            ↑           ↑           ↑
+  Route Setup  Function Logic  Business Logic  Data Access
 ```
 
-#### **2. Better Auth Integration**
+#### **2. Controller Organization**
+```typescript
+// Each function has its own folder and file
+// Controllers import and organize individual functions
+// tRPC routers use controller exports
+// Clean separation of concerns
+```
+
+#### **3. Better Auth Integration**
 ```typescript
 // Better Auth handles authentication
 // tRPC procedures use auth context
-// TypeORM entities match Better Auth schema
+// Drizzle ORM schema matches Better Auth requirements
 ```
 
-#### **3. Middleware Chain**
+#### **4. Middleware Chain**
 ```typescript
 // Request flows through middleware chain:
 Request → Security → CORS → Rate Limit → Body Parser → Better Auth → Route → Response
@@ -172,19 +202,23 @@ components/
 #### **`src/contexts/` - React Contexts**
 ```typescript
 contexts/
-├── 📄 AuthContext.tsx         # Authentication context and logic
-└── 📄 TRPCProvider.tsx        # tRPC and React Query provider
+└── 📄 AuthContext.tsx         # Authentication context and logic
+```
+
+#### **`src/providers/` - React Providers**
+```typescript
+providers/
+└── 📄 TRPCProvider.tsx        # React Query provider with DevTools
 ```
 
 #### **`src/pages/` - Route Components**
 ```typescript
 pages/
+├── 📄 HomePage.tsx            # Landing page
 ├── 📄 LoginPage.tsx           # User authentication
 ├── 📄 RegisterPage.tsx        # User registration
 ├── 📄 ForgotPasswordPage.tsx  # Password reset request
 ├── 📄 ResetPasswordPage.tsx   # Password reset
-├── 📄 VerifyEmailPage.tsx     # Email verification
-├── 📄 DashboardPage.tsx       # User dashboard
 └── 📄 NotFoundPage.tsx        # 404 page
 ```
 
@@ -199,8 +233,9 @@ layouts/
 ```typescript
 lib/
 ├── 📄 auth.ts                 # Better Auth client configuration
-├── 📄 trpc.ts                 # tRPC client setup
-└── 📄 config.ts               # Frontend configuration
+├── 📄 trpc.ts                 # tRPC client setup (placeholder)
+├── 📄 config.ts               # Frontend configuration
+└── 📄 utils.ts                # Utility functions
 ```
 
 ### **Frontend Architecture Patterns**
@@ -220,6 +255,12 @@ State  Layout  Logic   Logic      Elements
 - User preferences
 - Global notifications
 - Theme management
+
+// React Query for:
+- Server state management
+- Caching and synchronization
+- Background updates
+- DevTools integration
 ```
 
 #### **3. Data Flow**
@@ -250,7 +291,7 @@ import type { AppRouter } from '@/backend/src/trpc';
 
 ### **3. Database Schema**
 ```typescript
-// TypeORM entities match Better Auth requirements
+// Drizzle ORM schema matches Better Auth requirements
 // Automatic schema synchronization
 // Migration system for production
 ```
@@ -305,11 +346,13 @@ import type { AppRouter } from '@/backend/src/trpc';
 
 ### **1. Backend Feature**
 ```
-1. Create entity in database/entities/
-2. Add procedures in trpc/routers/
-3. Update shared types
-4. Add validation schemas
-5. Test with tRPC
+1. Create schema in database/entities/
+2. Create controller functions in controllers/[feature]/
+3. Add controller to controllers/index.ts
+4. Create tRPC router in trpc/routers/
+5. Update shared types
+6. Add validation schemas
+7. Test with tRPC
 ```
 
 ### **2. Frontend Feature**

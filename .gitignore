@@ -90,6 +90,12 @@ database.sqlite3
 # Database logs
 *.log
 
+# Drizzle migrations
+src/database/migrations/
+backend/src/database/migrations/
+**/migrations/
+**/migrations/meta/
+
 # =============================================================================
 # LOGS
 # =============================================================================
@@ -337,6 +343,7 @@ lerna.json
 # Keep example environment files
 !config/.env.example
 !frontend/.env.example
+!backend/.env.example
 
 # Keep documentation
 !docs/

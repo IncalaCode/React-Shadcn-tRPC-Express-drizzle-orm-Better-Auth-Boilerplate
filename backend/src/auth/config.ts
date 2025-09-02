@@ -1,13 +1,23 @@
 import "dotenv/config";
 import { betterAuth } from "better-auth";
-import { typeormAdapter } from "@hedystia/better-auth-typeorm";
-import { AppDataSource } from "../database/connection";
+import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { db } from "../database/connection";
+import { user, session, account, verification } from "../database/entities/auth-schema";
+import { resolveCorsOrigin } from "../utils/cors";
 
 const authWay = process.env.BETTERAUTH_WAY || "session";
 const isJWTMode = authWay === "jwt";
 
 export const auth = betterAuth({
-  database: typeormAdapter(AppDataSource),
+  database: drizzleAdapter(db, {
+    provider: "mysql",
+    schema: {
+      user,
+      session,
+      account,
+      verification,
+    },
+  }),
   
   baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
   secret: process.env.BETTER_AUTH_SECRET!,
@@ -72,7 +82,7 @@ export const auth = betterAuth({
     storage: "memory", // Use Redis in production
   },
   
-  trustedOrigins: process.env.CORS_ORIGIN?.split(","),
+  trustedOrigins: process.env.CORS_ORIGIN ? resolveCorsOrigin(process.env.CORS_ORIGIN) : undefined,
   
   // Advanced configuration
   useSecureCookies: process.env.NODE_ENV === "production",

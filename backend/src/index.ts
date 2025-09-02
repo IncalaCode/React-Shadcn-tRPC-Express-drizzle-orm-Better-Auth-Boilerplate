@@ -7,12 +7,12 @@ import compression from "compression";
 import morgan from "morgan";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 
-import { initializeDatabase } from "./database/connection";
-// Import auth after database is initialized
+import { db } from "./database/connection";
 import { appRouter } from "./trpc/routers/_app";
 import { createContext } from "./trpc/context";
 import { generalRateLimit, authRateLimit } from "./utils/security";
 import logger from "./utils/logger";
+import { resolveCorsOrigin } from "./utils/cors";
 
 dotenv.config();
 
@@ -39,8 +39,10 @@ app.use(helmet({
 app.use(compression());
 
 // CORS configuration
+const corsOrigins = process.env.CORS_ORIGIN ? resolveCorsOrigin(process.env.CORS_ORIGIN) : undefined;
+
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN?.split(","),
+  origin: corsOrigins,
   credentials: process.env.CORS_CREDENTIALS === "true",
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   allowedHeaders: [
@@ -171,15 +173,17 @@ process.on("uncaughtException", (error) => {
 // Start server
 const startServer = async () => {
   try {
-    await initializeDatabase();
-      const { auth } = await import("./auth/config");
-      authHandler = auth;
+    logger.info("✅ Database connection ready");
+    
+    const { auth } = await import("./auth/config");
+    authHandler = auth;
 
     app.listen(PORT, () => {
       logger.info(`🚀 Server running on port ${PORT}`);
       logger.info(`🔐 Auth API: http://localhost:${PORT}/api/auth`);
       logger.info(`🌐 tRPC API: http://localhost:${PORT}/api/trpc`);
       logger.info(`🔒 Environment: ${process.env.NODE_ENV || "development"}`);
+      logger.info("🌐 CORS Origins configured:", corsOrigins)
     });
   } catch (error) {
     logger.error("Failed to start server:", error);

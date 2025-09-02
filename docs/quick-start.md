@@ -1,6 +1,6 @@
 # 🚀 Quick Start Guide
 
-Get your React + tRPC + Express + TypeORM + Better Auth application running in **5 minutes**!
+Get your React + tRPC + Express + Drizzle ORM + Better Auth application running in **5 minutes**!
 
 ## ⚡ **Prerequisites**
 
@@ -14,7 +14,7 @@ Get your React + tRPC + Express + TypeORM + Better Auth application running in *
 ```bash
 # Clone the repository (or download and extract)
 git clone <your-repo-url>
-cd react-trpc-express-typeorm-better-auth
+cd react-trpc-express-drizzle-better-auth
 
 # Install all dependencies
 npm install
@@ -144,14 +144,14 @@ npm run dev:backend   # Backend on http://localhost:3001
 
 ### **Generate Migrations**
 ```bash
-# When you make changes to entities, generate a migration
-npm run migration:generate
+# When you make changes to schema, generate a migration
+npm run db:generate
 
 # Run migrations
-npm run migration:run
+npm run db:migrate
 
-# Revert last migration if needed
-npm run migration:revert
+# Push schema changes directly (development)
+npm run db:push
 ```
 
 ### **Database Synchronization**
@@ -234,11 +234,11 @@ npm run dev
 
 ### **Adding New Features**
 ```bash
-# 1. Create database entity in backend/src/database/entities/
+# 1. Create database schema in backend/src/database/entities/
 # 2. Add tRPC procedures in backend/src/trpc/routers/
 # 3. Build React components in frontend/src/components/
 # 4. Test functionality
-# 5. Generate migration if needed: npm run migration:generate
+# 5. Generate migration if needed: npm run db:generate
 # 6. Commit your changes
 ```
 

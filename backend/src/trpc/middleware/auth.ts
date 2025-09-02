@@ -1,7 +1,10 @@
 import { TRPCError } from "@trpc/server";
 import { middleware } from "../trpc";
+import { db } from "../../database/connection";
+import { user } from "../../database/entities/auth-schema";
+import { eq } from "drizzle-orm";
 
-export const isAuthenticated = middleware(({ ctx, next }) => {
+export const isAuthenticated = middleware(async ({ ctx, next }) => {
   if (!ctx.user) {
     throw new TRPCError({
       code: "UNAUTHORIZED",
@@ -9,12 +12,31 @@ export const isAuthenticated = middleware(({ ctx, next }) => {
     });
   }
 
-  return next({
-    ctx: {
-      ...ctx,
-      user: ctx.user,
-    },
-  });
+  try {
+    const [dbUser] = await db
+      .select({ role: user.role })
+      .from(user)
+      .where(eq(user.id, ctx.user.id));
+
+    const userWithCorrectRole = {
+      ...ctx.user,
+      role: dbUser?.role || 'user' // Use database role or default to 'user'
+    };
+
+    return next({
+      ctx: {
+        ...ctx,
+        user: userWithCorrectRole,
+      },
+    });
+  } catch (error) {
+    return next({
+      ctx: {
+        ...ctx,
+        user: ctx.user,
+      },
+    });
+  }
 });
 
 export const isEmailVerified = middleware(({ ctx, next }) => {

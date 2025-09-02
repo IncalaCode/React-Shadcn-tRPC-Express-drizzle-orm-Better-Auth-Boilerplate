@@ -2,8 +2,6 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from '@/contexts/AuthContext';
 import { TRPCProvider } from '@/providers/TRPCProvider';
-import { ProtectedRoute } from '@/components/ProtectedRoute';
-import { MainLayout } from '@/layouts/MainLayout';
 import { AuthLayout } from '@/layouts/AuthLayout';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 
@@ -13,9 +11,10 @@ import { LoginPage } from '@/pages/LoginPage';
 import { RegisterPage } from '@/pages/RegisterPage';
 import { ForgotPasswordPage } from '@/pages/ForgotPasswordPage';
 import { ResetPasswordPage } from '@/pages/ResetPasswordPage';
-import { DashboardPage } from '@/pages/DashboardPage';
-import { ProfilePage } from '@/pages/ProfilePage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
+import { AdminLayout } from '@/layouts/AdminLayout';
+import { AdminAccountPage } from '@/pages/admin/AdminAccountPage';
+import { ProtectedRoute } from '@/components/ProtectedRoute';
 
 // App Routes Component
 const AppRoutes: React.FC = () => {
@@ -49,18 +48,23 @@ const AppRoutes: React.FC = () => {
       {/* Reset password route (public) */}
       <Route path="/reset-password" element={<ResetPasswordPage />} />
 
-      {/* Protected routes */}
-      <Route
-        path="/dashboard"
+      {/* Admin routes */}
+      <Route 
+        path="/dashboard" 
         element={
-          <ProtectedRoute>
-            <MainLayout />
+          <ProtectedRoute admin={true}>
+            <AdminLayout />
           </ProtectedRoute>
-        }
-      >
-        <Route index element={<DashboardPage />} />
-        <Route path="profile" element={<ProfilePage />} />
-      </Route>
+        } 
+      />
+      <Route 
+        path="/admin/account" 
+        element={
+          <ProtectedRoute admin={true}>
+            <AdminAccountPage />
+          </ProtectedRoute>
+        } 
+      />
 
       {/* 404 route */}
       <Route path="*" element={<NotFoundPage />} />

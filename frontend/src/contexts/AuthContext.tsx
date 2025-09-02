@@ -57,7 +57,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         toast.success('Login successful!', {
           description: `Welcome back, ${result.data.user?.name || result.data.user?.email}!`,
         });
-        navigate('/dashboard');
+        navigate('/');
       } else {
         throw new Error('Login failed');
       }

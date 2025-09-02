@@ -2,9 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight, Shield, Zap, Users, Code, Database, Lock, Mail } from 'lucide-react';
+import { ArrowRight, Shield, Zap, Users, Code, Database, Lock, Mail, Settings } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
 
 export const HomePage: React.FC = () => {
+  const { user } = useAuth();
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
       {/* Hero Section */}
@@ -15,19 +17,40 @@ export const HomePage: React.FC = () => {
             <span className="block text-blue-600">TypeScript Boilerplate</span>
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-600 max-w-2xl mx-auto">
-            Build scalable applications with React, tRPC, Express, TypeORM, and Better Auth.
+            Build scalable applications with React, tRPC, Express, Drizzle ORM, and Better Auth.
             Get started in minutes with our production-ready boilerplate.
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
-            <Button asChild size="lg">
-              <Link to="/auth/register">
-                Get Started
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-            <Button variant="outline" asChild size="lg">
-              <Link to="/auth/login">Sign In</Link>
-            </Button>
+            {user ? (
+              <>
+                <Button asChild size="lg">
+                  <Link to="/dashboard">
+                    Go to Dashboard
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+                {user.role === 'admin' && (
+                  <Button variant="outline" asChild size="lg">
+                    <Link to="/admin">
+                      <Settings className="mr-2 h-4 w-4" />
+                      Admin Panel
+                    </Link>
+                  </Button>
+                )}
+              </>
+            ) : (
+              <>
+                <Button asChild size="lg">
+                  <Link to="/auth/register">
+                    Get Started
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button variant="outline" asChild size="lg">
+                  <Link to="/auth/login">Sign In</Link>
+                </Button>
+              </>
+            )}
           </div>
         </div>
       </section>
@@ -73,7 +96,7 @@ export const HomePage: React.FC = () => {
               <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
                 <Database className="h-6 w-6 text-purple-600" />
               </div>
-              <CardTitle>TypeORM Database</CardTitle>
+              <CardTitle>Drizzle ORM Database</CardTitle>
               <CardDescription>
                 Multi-database support with automatic migrations
               </CardDescription>
@@ -87,7 +110,7 @@ export const HomePage: React.FC = () => {
               </div>
               <CardTitle>Modern Stack</CardTitle>
               <CardDescription>
-                React 18, Express, TypeORM, and tRPC
+                React 18, Express, Drizzle ORM, and tRPC
               </CardDescription>
             </CardHeader>
           </Card>

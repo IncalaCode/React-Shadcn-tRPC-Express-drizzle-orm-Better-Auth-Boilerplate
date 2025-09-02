@@ -1,6 +1,6 @@
 # 📚 Documentation & Guides
 
-Welcome to the comprehensive documentation for the **React + tRPC + Express + TypeORM + Better Auth** boilerplate!
+Welcome to the comprehensive documentation for the **React + tRPC + Express + Drizzle ORM + Better Auth** boilerplate!
 
 ## 🎯 **Who This Documentation Is For**
 

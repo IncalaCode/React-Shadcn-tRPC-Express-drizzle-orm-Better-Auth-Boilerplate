@@ -5,9 +5,10 @@ import { LoadingSpinner } from './LoadingSpinner';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
+  admin?: boolean; // Optional prop to check for admin role
 }
 
-export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, admin = false }) => {
   const { user, isLoading } = useAuth();
   const location = useLocation();
 
@@ -20,9 +21,13 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   }
 
   if (!user) {
-    // Redirect to login page with the return url
     return <Navigate to="/auth/login" state={{ from: location }} replace />;
   }
+
+  // If admin prop is true, check for admin role
+  // if (admin && user.role !== 'admin') {
+  //   return <Navigate to="/" replace />;
+  // }
 
   return <>{children}</>;
 };

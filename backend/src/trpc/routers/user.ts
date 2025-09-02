@@ -1,14 +1,14 @@
 import { router } from "../trpc";
-import { userProcedures } from "../../procedures/user.procedures";
+import { userController } from "../../controllers/user/user.controller";
 
 export const userRouter = router({
-  getProfile: userProcedures.getProfile,
-  updateProfile: userProcedures.updateProfile,
-  deleteAccount: userProcedures.deleteAccount,
-  getAllUsers: userProcedures.getAllUsers,
-  getUserById: userProcedures.getUserById,
-  banUser: userProcedures.banUser,
-  unbanUser: userProcedures.unbanUser,
-  updateUserRole: userProcedures.updateUserRole,
-  getUserStats: userProcedures.getUserStats,
+  getProfile: userController.getProfile,
+  updateProfile: userController.updateProfile,
+  deleteAccount: userController.deleteAccount,
+  getAllUsers: userController.getAllUsers,
+  getUserById: userController.getUserById,
+  banUser: userController.banUser,
+  unbanUser: userController.unbanUser,
+  updateUserRole: userController.updateUserRole,
+  getUserStats: userController.getUserStats,
 });

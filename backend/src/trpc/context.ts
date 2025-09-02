@@ -27,28 +27,42 @@ export const createContext = async ({ req, res }: CreateContextOptions): Promise
   const context: Context = { req, res };
 
   try {
+    // Check for session token in cookies or JWT in Authorization header
     const sessionToken = req.cookies?.["better-auth.session_token"];
+    const authHeader = req.headers.authorization;
     
+    let headers = { ...req.headers };
+    
+    // Handle JWT token from Authorization header
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const token = authHeader.substring(7);
+      headers.authorization = `Bearer ${token}`;
+    }
+    
+    // Handle session token from cookies
     if (sessionToken) {
-      const session = await auth.api.getSession({
-        headers: req.headers as any,
-      });
+      headers.cookie = `better-auth.session_token=${sessionToken}`;
+    }
 
-      if (session?.session && session?.user) {
-        context.user = {
-          id: session.user.id,
-          email: session.user.email,
-          name: session.user.name,
-          role: (session.user as any).role || 'user', // Better Auth doesn't include role by default
-          emailVerified: session.user.emailVerified, // Keep as boolean
-        };
+    // Try to get session using Better Auth (handles both JWT and cookies)
+    const session = await auth.api.getSession({
+      headers: headers as any,
+    });
 
-        context.session = {
-          id: session.session.id,
-          userId: session.session.userId,
-          expiresAt: session.session.expiresAt,
-        };
-      }
+    if (session?.session && session?.user) {
+      context.user = {
+        id: session.user.id,
+        email: session.user.email,
+        name: session.user.name,
+        role: (session.user as any).role || 'user',
+        emailVerified: session.user.emailVerified,
+      };
+
+      context.session = {
+        id: session.session.id,
+        userId: session.session.userId,
+        expiresAt: session.session.expiresAt,
+      };
     }
   } catch (error) {
     console.error("Context creation error:", error);

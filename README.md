@@ -1,4 +1,4 @@
-# React (Shadcn) + tRPC + Express + TypeORM + Better Auth Boilerplate
+# React (Shadcn) + tRPC + Express + Drizzle ORM + Better Auth Boilerplate
 
 A modern, full-stack TypeScript boilerplate with end-to-end type safety, Better Auth authentication, and clean architecture.
 
@@ -6,7 +6,7 @@ A modern, full-stack TypeScript boilerplate with end-to-end type safety, Better 
 
 - **Frontend**: React 18 + TypeScript + Vite + Better Auth Client + Shadcn UI
 - **Backend**: Express.js + TypeScript + tRPC Server + Better Auth
-- **Database**: TypeORM with multiple database support (PostgreSQL, MySQL, SQLite)
+- **Database**: Drizzle ORM with multiple database support (PostgreSQL, MySQL, SQLite)
 - **Authentication**: Better Auth with Session & JWT support
 - **Type Safety**: Full end-to-end type safety with tRPC
 - **Modern Tooling**: Latest dependencies and best practices
@@ -34,13 +34,13 @@ A modern, full-stack TypeScript boilerplate with end-to-end type safety, Better 
 ### Backend
 - Express.js with TypeScript
 - tRPC server for type-safe APIs
-- TypeORM for database operations
+- Drizzle ORM for database operations
 - Better Auth for authentication
 - JWT and Session support
 - CORS and security middleware
 
 ### Database
-- TypeORM with multiple database support
+- Drizzle ORM with multiple database support
 - Migration system with auto-generation
 - Seeding capabilities
 
@@ -115,9 +115,9 @@ Configure email for verification and notifications:
 - `npm run clean` - Clean all build artifacts and node_modules
 
 ### Database Scripts
-- `npm run migration:generate` - Generate new migration file
-- `npm run migration:run` - Run pending migrations
-- `npm run migration:revert` - Revert last migration
+- `npm run db:generate` - Generate new migration file
+- `npm run db:migrate` - Run pending migrations
+- `npm run db:push` - Push schema changes to database
 
 ## 🔐 Better Auth Features
 

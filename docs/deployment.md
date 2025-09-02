@@ -1,6 +1,6 @@
 # 🚀 Deployment Guide
 
-Complete guide to deploy your React + tRPC + Express + TypeORM + Better Auth application to production.
+Complete guide to deploy your React + tRPC + Express + Drizzle ORM + Better Auth application to production.
 
 ## 🎯 **Deployment Options**
 
@@ -163,7 +163,7 @@ sudo systemctl enable postgresql
 ```bash
 # Clone your repository
 git clone <your-repo-url>
-cd react-trpc-express-typeorm-better-auth
+cd react-trpc-express-drizzle-better-auth
 
 # Install dependencies
 npm install && npm install --workspace=frontend && npm install --workspace=backend

@@ -1,6 +1,3 @@
-import { User } from './User';
-import { Session } from './Session';
-import { Account } from './Account';
-import { Verification } from './Verification';
+import { user ,session, account, verification} from './auth-schema';
 
-export const models = [User, Session, Account, Verification];
+export const models = [user ,session, account, verification];

@@ -1,5 +1,21 @@
-// tRPC is not currently used - we're using Better Auth for authentication
-// This file is kept for future reference if tRPC is needed later
+import { createTRPCReact } from '@trpc/react-query';
+import { httpBatchLink } from '@trpc/client';
+import { getTrpcUrl } from '@/config';
 
-export const trpc = {} as any;
-export const trpcClient = {} as any;
+// Create tRPC React hooks
+export const trpc = createTRPCReact();
+
+// Create tRPC client with proper typing
+export const trpcClient = (trpc as any).createClient({
+  links: [
+    httpBatchLink({
+      url: getTrpcUrl(),
+      fetch(url, options) {
+        return fetch(url, {
+          ...options,
+          credentials: 'include',
+        });
+      },
+    }),
+  ],
+});

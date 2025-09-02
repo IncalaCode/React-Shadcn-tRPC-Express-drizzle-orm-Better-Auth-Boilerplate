@@ -1,9 +1,7 @@
 // Export all controllers from a central location
-// This file can be used to export controller classes when they are created
+export * from "./auth/auth.controller";
+export * from "./user/user.controller";
 
-// Example:
-// export { UserController } from "./user.controller";
-// export { AuthController } from "./auth.controller";
-
-// For now, this file serves as a placeholder for future controllers
-// In this architecture, we primarily use tRPC procedures instead of traditional controllers
+// Re-export commonly used controllers for convenience
+export { authController } from "./auth/auth.controller";
+export { userController } from "./user/user.controller";

@@ -1,16 +1,16 @@
 import { router } from "../trpc";
-import { authProcedures } from "../../procedures/auth.procedures";
+import { authController } from "../../controllers/auth/auth.controller";
 
 export const authRouter = router({
-  signUp: authProcedures.signUp,
-  signIn: authProcedures.signIn,
-  signOut: authProcedures.signOut,
-  getSession: authProcedures.getSession,
-  getMe: authProcedures.getMe,
-  updateProfile: authProcedures.updateProfile,
-  changePassword: authProcedures.changePassword,
-  forgotPassword: authProcedures.forgotPassword,
-  resetPassword: authProcedures.resetPassword,
-  verifyEmail: authProcedures.verifyEmail,
-  sendVerificationEmail: authProcedures.sendVerificationEmail,
+  signUp: authController.signUp,
+  signIn: authController.signIn,
+  signOut: authController.signOut,
+  getSession: authController.getSession,
+  getMe: authController.getMe,
+  updateProfile: authController.updateProfile,
+  changePassword: authController.changePassword,
+  forgotPassword: authController.forgotPassword,
+  resetPassword: authController.resetPassword,
+  verifyEmail: authController.verifyEmail,
+  sendVerificationEmail: authController.sendVerificationEmail,
 });
