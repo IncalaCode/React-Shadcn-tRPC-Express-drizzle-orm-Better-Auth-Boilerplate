@@ -15,6 +15,7 @@ import { NotFoundPage } from '@/pages/NotFoundPage';
 import { AdminLayout } from '@/layouts/AdminLayout';
 import { AdminAccountPage } from '@/pages/admin/AdminAccountPage';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
+import { ProtectedAuthRoute } from '@/components/ProtectedAuthRoute';
 
 // App Routes Component
 const AppRoutes: React.FC = () => {
@@ -40,13 +41,41 @@ const AppRoutes: React.FC = () => {
           user ? <Navigate to="/dashboard" replace /> : <AuthLayout />
         }
       >
-        <Route path="login" element={<LoginPage />} />
-        <Route path="register" element={<RegisterPage />} />
-        <Route path="forgot-password" element={<ForgotPasswordPage />} />
+        <Route 
+          path="login" 
+          element={
+            <ProtectedAuthRoute requiredAccess="login">
+              <LoginPage />
+            </ProtectedAuthRoute>
+          } 
+        />
+        <Route 
+          path="register" 
+          element={
+            <ProtectedAuthRoute requiredAccess="register">
+              <RegisterPage />
+            </ProtectedAuthRoute>
+          } 
+        />
+        <Route 
+          path="forgot-password" 
+          element={
+            <ProtectedAuthRoute requiredAccess="forgotPassword">
+              <ForgotPasswordPage />
+            </ProtectedAuthRoute>
+          } 
+        />
       </Route>
 
       {/* Reset password route (public) */}
-      <Route path="/reset-password" element={<ResetPasswordPage />} />
+      <Route 
+        path="/reset-password" 
+        element={
+          <ProtectedAuthRoute requiredAccess="resetPassword">
+            <ResetPasswordPage />
+          </ProtectedAuthRoute>
+        } 
+      />
 
       {/* Admin routes */}
       <Route 

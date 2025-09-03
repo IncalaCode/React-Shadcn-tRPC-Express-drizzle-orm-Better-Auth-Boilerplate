@@ -76,7 +76,7 @@ export function RegisterForm() {
       if (selectedMethod === 'email') {
         registerData.email = formData.email;
       } else {
-        registerData.phone = formData.phone;
+        registerData.phoneNumber = formData.phone;
       }
 
       await register(registerData);

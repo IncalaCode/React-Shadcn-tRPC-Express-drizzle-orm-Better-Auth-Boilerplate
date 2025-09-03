@@ -9,7 +9,7 @@ import { AuthConfig } from '@/services/authConfig.service';
 interface User {
   id: string;
   email?: string;
-  phone?: string;
+  phoneNumber?: string | null;
   name?: string;
   emailVerified?: boolean;
   phoneVerified?: boolean;
@@ -26,7 +26,7 @@ interface AuthContextType {
   authConfig: AuthConfig | null;
   authConfigLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
-  loginWithPhone: (phone: string, password: string) => Promise<void>;
+  loginWithPhone: (phoneNumber: string, password: string) => Promise<void>;
   register: (data: RegisterData) => Promise<any>;
   verifyPhone: (phoneNumber: string, code: string) => Promise<void>;
   sendPhoneOTP: (phoneNumber: string) => Promise<void>;
@@ -36,7 +36,7 @@ interface AuthContextType {
 
 interface RegisterData {
   email?: string;
-  phone?: string;
+  phoneNumber?: string;
   password: string;
   name: string;
   username?: string;
@@ -84,9 +84,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const loginWithPhone = async (phone: string, password: string) => {
+  const loginWithPhone = async (phoneNumber: string, password: string) => {
     try {
-      const result = await authAPI.loginWithPhone({ phone, password });
+      const result = await authAPI.loginWithPhone({ phoneNumber, password });
       if (result.success && result.data) {
         toast.success('Login successful!', {
           description: `Welcome back, ${result.data.user?.name || result.data.user?.phoneNumber || 'User'}!`,
@@ -108,13 +108,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const result = await authAPI.register(data);
       if (result.success) {
-        if (data.phone && result.data?.requiresVerification) {
+        if (data.phoneNumber && result.data?.requiresVerification) {
           // Phone registration requires OTP verification
           toast.success('OTP sent!', {
             description: 'Please check your phone for the verification code.',
           });
           // Don't navigate to login yet, user needs to verify phone
-          return { requiresVerification: true, phoneNumber: data.phone };
+          return { requiresVerification: true, phoneNumber: data.phoneNumber };
         } else {
           // Email registration
           toast.success('Registration successful!', {

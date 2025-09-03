@@ -7,6 +7,15 @@ import { signInSchema } from "../../../schemas/auth.schema";
 export const signIn = publicProcedure
   .input(signInSchema)
   .mutation(async ({ input, ctx }) => {
+    // Check if login is allowed
+    const showAuth = process.env.SHOW_AUTH || "both";
+    if (showAuth !== "login" && showAuth !== "both") {
+      throw new TRPCError({
+        code: "FORBIDDEN",
+        message: "Login is currently disabled",
+      });
+    }
+
     try {
       const result = await auth.api.signInEmail({
         body: {

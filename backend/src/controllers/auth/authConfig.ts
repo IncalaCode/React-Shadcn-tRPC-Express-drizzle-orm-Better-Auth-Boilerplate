@@ -11,6 +11,9 @@ export const getAuthConfig = publicProcedure.query(async () => {
   const phoneAuthEnabled = process.env.PHONE_AUTH_ENABLED === "true";
   const emailVerificationRequired = process.env.BETTERAUTH_EMAIL_VERIFICATION_REQUIRED === "true";
   const phoneVerificationRequired = process.env.PHONE_VERIFICATION_REQUIRED === "true";
+  
+  // Page access control - which auth pages are accessible
+  const showAuth = process.env.SHOW_AUTH || "both"; // "login", "register", "both"
 
   // Determine available authentication methods
   const availableMethods = [];
@@ -78,6 +81,14 @@ export const getAuthConfig = publicProcedure.query(async () => {
       forgotPasswordText: "Forgot Password?",
       noAccountText: "Don't have an account?",
       hasAccountText: "Already have an account?",
+    },
+    
+    // Page access control
+    pages: {
+      allowLogin: showAuth === "login" || showAuth === "both",
+      allowRegister: showAuth === "register" || showAuth === "both",
+      allowForgotPassword: showAuth === "login" || showAuth === "both",
+      allowResetPassword: showAuth === "login" || showAuth === "both",
     },
     
     // Feature flags

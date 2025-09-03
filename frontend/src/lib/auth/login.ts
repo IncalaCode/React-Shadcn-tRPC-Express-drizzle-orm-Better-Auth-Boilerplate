@@ -23,10 +23,10 @@ export const loginMethods = {
   },
 
   // Phone login
-  loginWithPhone: async (credentials: { phone: string; password: string }) => {
+  loginWithPhone: async (credentials: { phoneNumber: string; password: string }) => {
     try {
       const result = await signIn.phoneNumber({
-        phoneNumber: credentials.phone,
+        phoneNumber: credentials.phoneNumber,
         password: credentials.password,
         rememberMe: true,
       });

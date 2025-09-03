@@ -3,7 +3,7 @@ import { signUp, authClient } from "./client";
 export const registerMethods = {
   register: async (userData: { 
     email?: string; 
-    phone?: string;
+    phoneNumber?: string;
     password: string; 
     name: string;
     username?: string; 
@@ -14,7 +14,7 @@ export const registerMethods = {
       // Better Auth expects 'name' field, so we'll use firstName + lastName or username
       const name = userData.firstName && userData.lastName 
         ? `${userData.firstName} ${userData.lastName}`.trim()
-        : userData.username || userData.email?.split('@')[0] || userData.phone || 'User';
+        : userData.username || userData.email?.split('@')[0] || userData.phoneNumber || 'User';
 
       // Determine registration method based on available data
       if (userData.email) {
@@ -34,11 +34,11 @@ export const registerMethods = {
             user: result.data?.user,
           }
         };
-      } else if (userData.phone) {
+      } else if (userData.phoneNumber) {
         // For phone registration, we need to use the phone number verification flow
         // First send OTP to the phone number
         const otpResult = await authClient.phoneNumber.sendOtp({
-          phoneNumber: userData.phone,
+          phoneNumber: userData.phoneNumber,
         });
         
         if (otpResult.error) {
@@ -51,7 +51,7 @@ export const registerMethods = {
           data: {
             message: 'OTP sent to your phone number. Please verify to complete registration.',
             requiresVerification: true,
-            phoneNumber: userData.phone,
+            phoneNumber: userData.phoneNumber,
           }
         };
       } else {

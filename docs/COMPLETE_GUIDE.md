@@ -210,6 +210,7 @@ BETTER_AUTH_URL=http://localhost:3001
 
 # Dynamic Authentication Configuration
 AUTH_METHOD=both          # 'email', 'phone', or 'both'
+SHOW_AUTH=both           # 'login', 'register', or 'both'
 PHONE_AUTH_ENABLED=true
 PHONE_VERIFICATION_REQUIRED=true
 PHONE_VERIFICATION_EXPIRES=300
@@ -298,6 +299,21 @@ AUTH_METHOD=phone        # Phone only
 # Multiple methods
 AUTH_METHOD=both         # Both email and phone
 ```
+
+#### **Authentication Page Access Control**
+```bash
+# Page access control - which auth pages are accessible
+SHOW_AUTH=both          # Both login and register pages accessible (default)
+SHOW_AUTH=login         # Only login page accessible, registration disabled
+SHOW_AUTH=register      # Only register page accessible, login disabled
+```
+
+**Security Features:**
+- **Login Only Mode**: When `SHOW_AUTH=login`, registration is completely disabled
+- **Register Only Mode**: When `SHOW_AUTH=register`, login is completely disabled
+- **Backend Protection**: All auth endpoints are protected and return 403 errors when disabled
+- **Frontend Protection**: Disabled pages show access denied message
+- **Token Validation**: No authentication tokens are accepted for disabled operations
 
 #### **Phone Authentication Settings**
 ```bash
@@ -405,6 +421,12 @@ DB_DATABASE=./database.sqlite
     "passwordLabel": "Password",
     "signInButtonText": "Sign In",
     "signUpButtonText": "Create Account"
+  },
+  "pages": {
+    "allowLogin": true,
+    "allowRegister": true,
+    "allowForgotPassword": true,
+    "allowResetPassword": true
   },
   "features": {
     "emailVerification": true,

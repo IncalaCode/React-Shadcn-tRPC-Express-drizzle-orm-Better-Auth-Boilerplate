@@ -58,11 +58,19 @@ export interface AuthFeatures {
   socialLogin: boolean;
 }
 
+export interface AuthPageAccess {
+  allowLogin: boolean;
+  allowRegister: boolean;
+  allowForgotPassword: boolean;
+  allowResetPassword: boolean;
+}
+
 export interface AuthConfig {
   availableMethods: AuthMethod[];
   settings: AuthSettings;
   verification: VerificationSettings;
   ui: AuthUIConfig;
+  pages: AuthPageAccess;
   features: AuthFeatures;
 }
 
@@ -147,6 +155,12 @@ class AuthConfigService {
         noAccountText: "Don't have an account?",
         hasAccountText: 'Already have an account?',
       },
+      pages: {
+        allowLogin: true,
+        allowRegister: true,
+        allowForgotPassword: true,
+        allowResetPassword: true,
+      },
       features: {
         emailVerification: true,
         phoneVerification: false,
@@ -203,6 +217,38 @@ class AuthConfigService {
    */
   getDefaultMethod(): 'email' | 'phone' {
     return this.config?.settings.defaultMethod ?? 'email';
+  }
+
+  /**
+   * Check if login page is accessible
+   * @returns boolean
+   */
+  isLoginPageAccessible(): boolean {
+    return this.config?.pages.allowLogin ?? true;
+  }
+
+  /**
+   * Check if register page is accessible
+   * @returns boolean
+   */
+  isRegisterPageAccessible(): boolean {
+    return this.config?.pages.allowRegister ?? true;
+  }
+
+  /**
+   * Check if forgot password page is accessible
+   * @returns boolean
+   */
+  isForgotPasswordPageAccessible(): boolean {
+    return this.config?.pages.allowForgotPassword ?? true;
+  }
+
+  /**
+   * Check if reset password page is accessible
+   * @returns boolean
+   */
+  isResetPasswordPageAccessible(): boolean {
+    return this.config?.pages.allowResetPassword ?? true;
   }
 
   /**

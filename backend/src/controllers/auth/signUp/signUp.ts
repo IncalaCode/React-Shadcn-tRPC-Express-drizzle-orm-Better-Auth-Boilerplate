@@ -7,6 +7,15 @@ import { signUpSchema } from "../../../schemas/auth.schema";
 export const signUp = publicProcedure
   .input(signUpSchema)
   .mutation(async ({ input, ctx }) => {
+    // Check if registration is allowed
+    const showAuth = process.env.SHOW_AUTH || "both";
+    if (showAuth !== "register" && showAuth !== "both") {
+      throw new TRPCError({
+        code: "FORBIDDEN",
+        message: "Registration is currently disabled",
+      });
+    }
+
     try {
       const result = await auth.api.signUpEmail({
         body: {

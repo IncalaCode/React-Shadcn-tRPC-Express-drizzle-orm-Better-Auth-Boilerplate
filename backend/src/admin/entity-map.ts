@@ -25,7 +25,7 @@ export const EntityLabels = {
 // make sure to match the fields with the entity schema
 
 export const EntityFields = {
-  User: ["email", "phone", "name", "role", "emailVerified", "phoneVerified"],
+  User: ["email", "phoneNumber", "name", "role", "emailVerified", "phoneVerified"],
   Session: [ "userId", "expiresAt", "createdAt"],
   Account: ["userId", "providerId", "accountId", "createdAt"],
   Verification: [ "identifier", "value", "expiresAt", "createdAt"],
