@@ -5,7 +5,7 @@ import { getTrpcUrl } from '@/config';
 // Create tRPC React hooks
 export const trpc = createTRPCReact();
 
-// Create tRPC client with proper typing
+// Create tRPC client
 export const trpcClient = (trpc as any).createClient({
   links: [
     httpBatchLink({

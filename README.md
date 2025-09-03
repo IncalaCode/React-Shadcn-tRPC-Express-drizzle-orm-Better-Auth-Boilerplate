@@ -1,14 +1,17 @@
 # React (Shadcn) + tRPC + Express + Drizzle ORM + Better Auth Boilerplate
 
-A modern, full-stack TypeScript boilerplate with end-to-end type safety, Better Auth authentication, and clean architecture.
+A modern, full-stack TypeScript boilerplate with **dynamic authentication**, end-to-end type safety, Better Auth, and clean architecture.
 
 ## 🚀 Features
 
 - **Frontend**: React 18 + TypeScript + Vite + Better Auth Client + Shadcn UI
 - **Backend**: Express.js + TypeScript + tRPC Server + Better Auth
 - **Database**: Drizzle ORM with multiple database support (PostgreSQL, MySQL, SQLite)
-- **Authentication**: Better Auth with Session & JWT support
+- **🔐 Dynamic Authentication**: Email, phone, or both (configurable via environment)
+- **📱 Phone Verification**: SMS service with customizable providers
+- **🎨 Modern UI**: Shadcn UI components with responsive design
 - **Type Safety**: Full end-to-end type safety with tRPC
+- **🤖 AI-Friendly**: Optimized for AI-assisted development
 - **Modern Tooling**: Latest dependencies and best practices
 - **Deployment Ready**: Separate frontend/backend for easy deployment
 
@@ -44,13 +47,15 @@ A modern, full-stack TypeScript boilerplate with end-to-end type safety, Better 
 - Migration system with auto-generation
 - Seeding capabilities
 
-### Authentication (Better Auth)
-- **User Management**: Registration, login, profile management
-- **Email Verification**: Secure email verification system
-- **Password Reset**: Forgot password and reset functionality
-- **Session Management**: Flexible session and JWT authentication
-- **Security Features**: Rate limiting, CSRF protection, secure cookies
-- **Multi-Provider**: Support for OAuth providers (configurable)
+### Dynamic Authentication (Better Auth)
+- **🔐 Flexible Methods**: Email, phone, or both (configurable via environment)
+- **📱 Phone Verification**: SMS service with customizable providers (Twilio, custom, mock)
+- **📧 Email Verification**: Secure email verification system
+- **🔄 Backend-Driven UI**: Frontend adapts based on backend configuration
+- **🔑 Password Reset**: Forgot password and reset functionality
+- **⚡ Session Management**: Flexible session and JWT authentication
+- **🛡️ Security Features**: Rate limiting, CSRF protection, secure cookies
+- **🔌 Multi-Provider**: Support for OAuth providers (configurable)
 
 ### UI Components (Shadcn UI)
 - **Beautiful Design**: Modern, accessible component library
@@ -186,22 +191,20 @@ npm run drizzle:studio
 
 ## 📚 Documentation
 
-We've created comprehensive documentation to help you get started quickly:
+### 🎯 **Complete Guide**
+- **[📖 Complete Developer & AI Guide](./docs/COMPLETE_GUIDE.md)** - Everything you need in one place!
 
-### 🚀 **Getting Started**
-- **[📖 Documentation Hub](./docs/README.md)** - Complete guide index
-- **[🚀 Quick Start Guide](./docs/quick-start.md)** - Get running in 5 minutes
-- **[🏗️ Project Structure](./docs/project-structure.md)** - Understand the codebase
-
-### 🤖 **AI-Assisted Development**
-- **[🤖 AI Coding Guide](./docs/ai-coding-guide.md)** - Work effectively with AI assistants
-- **[📝 Prompt Templates](./docs/prompt-templates.md)** - Ready-to-use AI prompts
-
-### 🚀 **Deployment & Production**
-- **[🚀 Deployment Guide](./docs/deployment.md)** - Deploy to any platform (cPanel, VPS, Cloud)
+This comprehensive guide includes:
+- **🚀 Quick Start** - Get running in 5 minutes
+- **🏗️ Project Structure** - Understand the codebase organization
+- **🔐 Dynamic Authentication** - Email/phone authentication system
+- **🤖 AI-Assisted Development** - Work effectively with AI assistants
+- **📝 Prompt Templates** - Ready-to-use AI prompts
+- **🚀 Deployment** - Deploy to any platform (cPanel, VPS, Cloud)
+- **🔍 Troubleshooting** - Common issues and solutions
 
 ### 📚 **For AI Assistants**
-If you're using AI to help with development, start with the [AI Coding Guide](./docs/ai-coding-guide.md) and use the [Prompt Templates](./docs/prompt-templates.md) for common tasks.
+If you're using AI to help with development, the [Complete Guide](./docs/COMPLETE_GUIDE.md) contains all the patterns, examples, and prompts you need for effective AI-assisted development.
 
 ## 🤝 Contributing
 

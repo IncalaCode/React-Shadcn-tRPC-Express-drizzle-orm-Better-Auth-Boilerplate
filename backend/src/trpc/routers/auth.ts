@@ -1,5 +1,6 @@
 import { router } from "../trpc";
 import { authController } from "../../controllers/auth/auth.controller";
+import { getAuthConfig } from "../../controllers/auth/authConfig";
 
 export const authRouter = router({
   signUp: authController.signUp,
@@ -13,4 +14,5 @@ export const authRouter = router({
   resetPassword: authController.resetPassword,
   verifyEmail: authController.verifyEmail,
   sendVerificationEmail: authController.sendVerificationEmail,
+  getAuthConfig,
 });

@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { CheckCircle, XCircle, ArrowLeft, Loader2 } from 'lucide-react';
 import { authAPI } from '@/lib/auth';
+import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
 import { Link } from 'react-router-dom';
 
@@ -13,6 +14,7 @@ export const VerifyEmailPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState('');
+  const { authConfig } = useAuth();
   
   const token = searchParams.get('token');
 
@@ -101,7 +103,7 @@ export const VerifyEmailPage: React.FC = () => {
               <div className="space-y-3">
                 <Button asChild className="w-full">
                   <Link to="/auth/login">
-                    Sign in now
+                    {authConfig?.ui.signInButtonText || 'Sign in now'}
                   </Link>
                 </Button>
                 <Button variant="outline" asChild className="w-full">
@@ -155,12 +157,12 @@ export const VerifyEmailPage: React.FC = () => {
             <div className="space-y-3">
               <Button asChild className="w-full">
                 <Link to="/auth/login">
-                  Go to sign in
+                  {authConfig?.ui.signInButtonText || 'Go to sign in'}
                 </Link>
               </Button>
               <Button variant="outline" asChild className="w-full">
                 <Link to="/auth/register">
-                  Create new account
+                  {authConfig?.ui.signUpButtonText || 'Create new account'}
                 </Link>
               </Button>
             </div>

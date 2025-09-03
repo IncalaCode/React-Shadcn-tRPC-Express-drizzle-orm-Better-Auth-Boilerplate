@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { Users, Database, Shield, Mail, Settings, LayoutDashboard, ChevronRight, X } from 'lucide-react';
+import { ChevronRight, X } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { UserProfile } from './AdminSidebar/UserProfile';
+import { getIconByName } from '@/utils/iconUtils';
 
 interface AdminSidebarProps {
   isOpen: boolean;
@@ -13,17 +14,11 @@ interface AdminSidebarProps {
   entities: Array<{
     name: string;
     label: string;
+    icon?: string;
   }>;
 }
 
-const entityIcons = {
-  User: Users,
-  Session: Database,
-  Account: Shield,
-  Verification: Mail,
-  AdminActivity: LayoutDashboard,
-  SystemSettings: Settings,
-};
+
 
 export const AdminSidebar: React.FC<AdminSidebarProps> = ({
   isOpen,
@@ -101,7 +96,8 @@ export const AdminSidebar: React.FC<AdminSidebarProps> = ({
         
           <div className="flex-1 p-4 space-y-2">
             {entities.map((entity, index) => {
-              const Icon = entityIcons[entity.name as keyof typeof entityIcons] || Users;
+              // Use dynamic icon loading with fallback to default
+              const Icon = getIconByName(entity.icon || 'Database');
               return (
                 <Tooltip key={entity.name}>
                   <TooltipTrigger asChild>

@@ -1,5 +1,6 @@
 import "dotenv/config";
 import { betterAuth } from "better-auth";
+import { phoneNumber } from "better-auth/plugins";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "../database/connection";
 import { user, session, account, verification } from "../database/entities/auth-schema";
@@ -22,8 +23,33 @@ export const auth = betterAuth({
   baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
   secret: process.env.BETTER_AUTH_SECRET!,
   
+  plugins: [
+    phoneNumber({
+      sendOTP: async ({ phoneNumber, code }, request) => {
+        const { smsService } = await import("../services/sms.service");
+        
+        try {
+          const success = await smsService.sendVerificationCode(phoneNumber, code);
+          
+          if (success) {
+            console.log(`✅ OTP sent to: ${phoneNumber}`);
+          } else {
+            throw new Error("Failed to send OTP");
+          }
+        } catch (error) {
+          console.error("❌ Failed to send OTP:", error);
+          throw error;
+        }
+      },
+      signUpOnVerification: {
+        getTempEmail: (phoneNumber) => `${phoneNumber.replace(/[^0-9]/g, '')}@phone.temp`,
+        getTempName: (phoneNumber) => phoneNumber,
+      },
+    }),
+  ],
+  
   emailAndPassword: {
-    enabled: true,
+    enabled: process.env.AUTH_METHOD === "email" || process.env.AUTH_METHOD === "both",
     autoSignIn: true,
     minPasswordLength: parseInt(process.env.BETTERAUTH_PASSWORD_MIN_LENGTH || "8"),
     maxPasswordLength: 128,
@@ -45,6 +71,8 @@ export const auth = betterAuth({
       }
     },
   },
+
+
 
   session: {
     expiresIn: parseInt(process.env.BETTERAUTH_SESSION_DURATION || "604800"), // 7 days in seconds
@@ -111,6 +139,8 @@ export const auth = betterAuth({
       // You can add custom logic here, like granting access to premium features
     },
   },
+
+
   
 
   

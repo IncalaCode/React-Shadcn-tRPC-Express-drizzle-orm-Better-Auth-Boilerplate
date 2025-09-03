@@ -5,8 +5,12 @@ import { mysqlTable, varchar, datetime, tinyint } from "drizzle-orm/mysql-core";
 export const user = mysqlTable("user", {
   id: varchar("id", { length: 255 }).primaryKey(),
   name: varchar("name", { length: 255 }).notNull(),
-  email: varchar("email", { length: 255 }).notNull().unique(),
+  email: varchar("email", { length: 255 }),
+  phone: varchar("phone", { length: 20 }),
   emailVerified: tinyint("email_verified")
+    .$defaultFn(() => 0)
+    .notNull(),
+  phoneVerified: tinyint("phone_verified")
     .$defaultFn(() => 0)
     .notNull(),
   image: varchar("image", { length: 500 }),

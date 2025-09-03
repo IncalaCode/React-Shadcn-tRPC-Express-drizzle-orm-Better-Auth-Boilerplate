@@ -4,8 +4,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Lock, ArrowLeft, CheckCircle, Eye, EyeOff } from 'lucide-react';
+import { Lock, ArrowLeft, CheckCircle, Eye, EyeOff, Loader2 } from 'lucide-react';
 import { authAPI } from '@/lib/auth';
+import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
 
 export const ResetPasswordPage: React.FC = () => {
@@ -17,6 +18,7 @@ export const ResetPasswordPage: React.FC = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const { authConfig, authConfigLoading } = useAuth();
   
   const token = searchParams.get('token');
 
@@ -39,9 +41,10 @@ export const ResetPasswordPage: React.FC = () => {
       return;
     }
 
-    if (password.length < 8) {
+    const minLength = authConfig?.settings.passwordMinLength || 8;
+    if (password.length < minLength) {
       toast.error('Password too short', {
-        description: 'Password must be at least 8 characters long.',
+        description: `Password must be at least ${minLength} characters long.`,
       });
       return;
     }
@@ -113,9 +116,26 @@ export const ResetPasswordPage: React.FC = () => {
     );
   }
 
+  // Show loading state while auth config is loading
+  if (authConfigLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50 px-4">
+        <Card className="w-full max-w-md">
+          <CardContent className="flex items-center justify-center py-8">
+            <Loader2 className="h-6 w-6 animate-spin" />
+            <span className="ml-2">Loading...</span>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   if (!token) {
     return null; // Will redirect in useEffect
   }
+
+  const minLength = authConfig?.settings.passwordMinLength || 8;
+  const maxLength = authConfig?.settings.passwordMaxLength || 128;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50 px-4">
@@ -145,7 +165,7 @@ export const ResetPasswordPage: React.FC = () => {
               {/* New Password Field */}
               <div className="space-y-2">
                 <Label htmlFor="password" className="text-sm font-medium text-gray-700">
-                  New password
+                  New {authConfig?.ui.passwordLabel || 'password'}
                 </Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
@@ -157,7 +177,8 @@ export const ResetPasswordPage: React.FC = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     className="pl-10 pr-10"
                     required
-                    minLength={8}
+                    minLength={minLength}
+                    maxLength={maxLength}
                   />
                   <Button
                     type="button"
@@ -178,7 +199,7 @@ export const ResetPasswordPage: React.FC = () => {
               {/* Confirm Password Field */}
               <div className="space-y-2">
                 <Label htmlFor="confirmPassword" className="text-sm font-medium text-gray-700">
-                  Confirm new password
+                  Confirm new {authConfig?.ui.passwordLabel || 'password'}
                 </Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
@@ -190,7 +211,8 @@ export const ResetPasswordPage: React.FC = () => {
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     className="pl-10 pr-10"
                     required
-                    minLength={8}
+                    minLength={minLength}
+                    maxLength={maxLength}
                   />
                   <Button
                     type="button"
@@ -210,7 +232,7 @@ export const ResetPasswordPage: React.FC = () => {
 
               {/* Password Requirements */}
               <div className="text-xs text-gray-500 space-y-1">
-                <p>Password must be at least 8 characters long</p>
+                <p>Password must be at least {minLength} characters long</p>
                 <p>Make sure both passwords match</p>
               </div>
 
@@ -220,7 +242,14 @@ export const ResetPasswordPage: React.FC = () => {
                 className="w-full"
                 disabled={isLoading}
               >
-                {isLoading ? 'Resetting...' : 'Reset password'}
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Resetting...
+                  </>
+                ) : (
+                  'Reset password'
+                )}
               </Button>
             </form>
 
@@ -232,7 +261,7 @@ export const ResetPasswordPage: React.FC = () => {
                   to="/auth/login"
                   className="font-medium text-blue-600 hover:text-blue-500"
                 >
-                  Sign in
+                  {authConfig?.ui.signInButtonText || 'Sign in'}
                 </Link>
               </div>
             </div>

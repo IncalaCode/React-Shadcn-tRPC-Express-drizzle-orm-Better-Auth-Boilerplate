@@ -97,11 +97,22 @@ export class AdminService {
 
   async getEntityConfig() {
     return {
-      entities: Object.keys(EntityMap).map(name => ({
-        name,
-        label: EntityLabels[name as AllowedEntity],
-        fields: EntityFields[name as AllowedEntity]
-      }))
+      entities: Object.keys(EntityMap)
+        .filter(name => {
+          // Only include entities that have configurations in EntityLabels
+          const entityConfig = EntityLabels[name as keyof typeof EntityLabels];
+          return entityConfig !== undefined;
+        })
+        .map(name => {
+          const entityConfig = EntityLabels[name as keyof typeof EntityLabels];
+          const entityFields = EntityFields[name as keyof typeof EntityFields];
+          return {
+            name,
+            label: entityConfig.label,
+            fields: entityFields || [],
+            icon: entityConfig.icon
+          };
+        })
     };
   }
 }

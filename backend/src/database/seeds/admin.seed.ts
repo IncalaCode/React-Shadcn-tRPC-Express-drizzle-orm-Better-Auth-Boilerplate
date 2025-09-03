@@ -39,7 +39,7 @@ export async function seedAdmin() {
           .update(user)
           .set({ 
             role: "admin",
-            emailVerified: true
+            emailVerified: 1
           })
           .where(eq(user.id, result.user.id));
       }

@@ -11,6 +11,8 @@ import { resetPassword } from "./resetPassword/resetPassword";
 import { verifyEmail } from "./verifyEmail/verifyEmail";
 import { sendVerificationEmail } from "./sendVerificationEmail/sendVerificationEmail";
 
+
+
 export const authController = {
   // Public authentication controllers
   signUp,
